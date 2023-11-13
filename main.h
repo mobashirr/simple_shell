@@ -11,7 +11,6 @@
 #include <alloca.h>
 #include <sys/stat.h>
 
-
 #define LINEBUF 1024
 #define ARGBUF  64
 #define DELIMIT " \t\r\n\a"
