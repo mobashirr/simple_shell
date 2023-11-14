@@ -56,13 +56,16 @@ int execfun(char **args)
                         if (execve(path, args, env) == -1)
                         {
                                 perror("./hsh: ");
+                                free_command(args);
                                         exit(2);
                         }
                         free(path);
+                        free_command(args);
                         exit(126);
                 }
                 free(path);
                 fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+                free_command(args);
                 exit(127);
         }
         return (1);
