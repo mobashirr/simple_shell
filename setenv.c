@@ -52,7 +52,7 @@ int _setenv_(const char *name, const char *value, int rewrite)
 			return (-1);
 	for (C = environ[offset]; (*C = *name++) && *C != '='; ++C)
 		;
-	for (*C = '='; (*C++ = *value++);)
+	for (*C++ = '='; (*C++ = *value++);)
 		;
 	return (0);
 }
