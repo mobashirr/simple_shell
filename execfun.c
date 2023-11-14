@@ -42,11 +42,11 @@ int execfun(char **args)
         pid = fork();
         if (pid > 0)
         {
-                do
-                {
-                        waitpid(pid, &status, WUNTRACED);
-                } while (!WIFEXITED(status) && !WIFSIGNALED(status));
-                return (WIFEXITED(status));
+		do
+		{
+			waitpid(pid, &status, WUNTRACED);
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		return (WEXITSTATUS(status));
         }
         else if (pid == 0)
         {
@@ -55,9 +55,7 @@ int execfun(char **args)
                 {
                         if (execve(path, args, env) == -1)
                         {
-                                free(path);
                                 perror("./hsh: ");
-                                if (errno == EINVAL)
                                         exit(2);
                         }
                         free(path);

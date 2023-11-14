@@ -7,10 +7,9 @@ int exit_stat = 0;
 */
 int main(void)
 {
-	char *line, **tokens;
+	char *line = NULL, **tokens = NULL;
 	size_t len = 0;
 	const char *prompt = "shell $ ";
-	static int status = 0;
 	long unsigned int envo = length(environ);
 
 	while(1)
@@ -23,9 +22,8 @@ int main(void)
 
 		tokens = parse(line);
 		if(tokens[0])
-			status = execfun(tokens);
-		exit_stat = status;
-
+			exit_stat = execfun(tokens);
+		
 		if(tokens)
 			free(tokens);
 	}
@@ -33,7 +31,7 @@ int main(void)
 		free(line);
 	if(envo != length(environ))
 		free(environ);
-	exit(status);
+	exit(exit_stat);
 
 	return (0);
 }

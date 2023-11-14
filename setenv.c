@@ -40,7 +40,7 @@ int _setenv_(const char *name, const char *value, int rewrite)
 		if (!P)
 			return (-1);
 		if (lastenv != environ)
-			mempcpy(P, environ, cnt * sizeof(char *));
+			memcpy(P, environ, cnt * sizeof(char *));
 		lastenv = environ = P;
 		offset = cnt;
 		environ[cnt + 1] = NULL;

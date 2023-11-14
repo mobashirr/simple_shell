@@ -70,7 +70,6 @@ char *getpath(const char *name)
                 if (!full_path)
                 {
                         perror("./hsh: ");
-                        free(token);
                         return (NULL);
                 }
                 strcpy(full_path, token);
@@ -78,13 +77,11 @@ char *getpath(const char *name)
                 strcat(full_path, name);
                 if (stat(full_path, &st) == 0)
                 {
-                        free(token);
                         return (full_path);
                 }
                 free(full_path);
                 token = strtok(NULL, delim);
         }
-        free(token);
         return (NULL);
 
 }

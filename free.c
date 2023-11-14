@@ -29,7 +29,6 @@ void *_realloc_(void *ptr, size_t size)
  * free_command - free allocated memory for array
  * @arr: string array
 */
-
 void free_command(char **arr)
 {
         if (arr[0])
