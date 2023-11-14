@@ -58,29 +58,9 @@ setting:
 
 int exitfun(char **command)
 {
-        int status;
-
-        if (!command)
-        {
-                free_command(command);
-                exit(exit_stat);
-        }
-        status = atoi(command[1]);
-        if (isNumber(command[1]) == 0)
-        {
-                fprintf(stderr, "./hsh: 1: exit: Illegal number: %s\n",
-                                        command[1]);
-                return (2);
-        }
-
-        if (command[1] && status >= 0)
-        {
-                free_command(command);
-                exit(status);
-        }
-        else
-                fprintf(stderr, "./hsh: 1: exit: Illegal number: %s\n", command[1]);
-        return (2);
+        if (command[1])
+                exit(atoi(command[1]));
+        exit (0);
 }
 
 /**
