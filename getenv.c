@@ -45,3 +45,14 @@ char *_getenv_(const char *name)
 
         return (_findenv_(name, &offset));
 }
+
+/**
+ * getpath - find full path in directories
+ * @name: name of program
+ * Return: string conatins full path, otherwise NULL
+*/
+
+char *getpath(const char *name, char *env[])
+{
+        char *pathenv = _getenv_("PATH");
+}

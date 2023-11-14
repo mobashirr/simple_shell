@@ -32,7 +32,7 @@ int _setenv_(const char *name, const char *value, int rewrite);
 char    *_findenv_(const char *name, int *offset);
 char    *_getenv_(const char *name);
 char	*getpath(const char *, char *env[]);
-void	*_realloc(void* array, size_t* size, size_t new_size);
+void	*_realloc_(void *, size_t size);
 int	_strcmp(const char *, const char *);
 int	isNumber(const char *); 
 int	_strlen(const char *);

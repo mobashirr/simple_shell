@@ -36,7 +36,7 @@ int _setenv_(const char *name, const char *value, int rewrite)
 		for (P = environ; *P != NULL; P++)
 			;
 		cnt = P - environ;
-		P = (char **)realloc(lastenv, sizeof(char *) * (cnt + 2));
+		P = (char **)_realloc_(lastenv, sizeof(char *) * (cnt + 2));
 		if (!P)
 			return (-1);
 		if (lastenv != environ)

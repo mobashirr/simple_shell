@@ -24,7 +24,7 @@ char **parse(char *line)
                 if (len >= cap)
                 {
                         cap += (ARGBUF + 1);
-                        tokens = realloc(tokens, cap * sizeof(char *));
+                        tokens = _realloc_(tokens, cap * sizeof(char *));
                         if (!tokens)
                         {
                                 perror("./hsh: ");
