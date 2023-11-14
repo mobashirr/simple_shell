@@ -50,6 +50,8 @@ int _setenv_(const char *name, const char *value, int rewrite)
 	if (!(environ[offset] =
 			malloc((size_t)((int)(C - name) + l_value + 2))))
 			return (1);
+	for (C = environ[offset]; (*C = *name++) && *C != '='; ++C)
+		;
 	for (*C++ = '='; (*C++ = *value++);)
 		;
 	return (0);
