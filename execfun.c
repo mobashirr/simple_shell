@@ -15,7 +15,7 @@ int execbul(char **args)
         else if (strcmp(args[0], "env") == 0)
                 return (envfun(args));
         else if (strcmp(args[0], "setenv") == 0)
-                return (_setenv_(args));
+                return (_setenv_(args[0], args[1], 1));
         else if (strcmp(args[0], "unsetenv") == 0)
                 return (_unsetenv_(args[1]));
         return (-1);
@@ -46,11 +46,11 @@ int execfun(char **args)
                 {
                         waitpid(pid, &status, WUNTRACED);
                 } while (!WIFEXITED(status) && !WIFSIGNALED(status));
-                return (WEXITSTATUS(status));
+                return (WIFEXITED(status));
         }
         else if (pid == 0)
         {
-                path = getpath(args[0], env);
+                path = getpath(args[0]);
                 if (stat(path, &st) == 0)
                 {
                         if (execve(path, args, env) == -1)

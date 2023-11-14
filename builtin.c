@@ -22,14 +22,13 @@ int cdfun(char **command)
                                 free(old);
                         if (pwd)
                                 free(pwd);
-                        return (1)
+                        return (1);
                 }
                 if (chdir(old) == -1)
                 {
                         free(pwd);
                         free(old);
-                        fprintf(stderr, "./hsh: 1: %s: can't cd to %s\n",
-                                        command[0], command[1]);
+                        fprintf(stderr, "./hsh: 1: %s: can't cd to %s\n", command[0], command[1]);
                         return (2);
                 }
                 printf("%s\n", old);
@@ -38,8 +37,7 @@ int cdfun(char **command)
         }
         else if (chdir(command[1]) == -1)
         {
-                fprintf(stderr, "./hsh: 1: can't cd to %s\n",
-                                command[0], command[1]);
+                fprintf(stderr, "./hsh: 1: can't cd to %s\n", command[1]);
                 return (2);
         }
         pwd = _getenv_("PWD");
@@ -68,7 +66,7 @@ int exitfun(char **command)
                 exit(exit_stat);
         }
         status = atoi(command[1]);
-        if (isNumber(status) == 0)
+        if (isNumber(command[1]) == 0)
         {
                 fprintf(stderr, "./hsh: 1: exit: Illegal number: %s\n",
                                         command[1]);

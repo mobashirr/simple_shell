@@ -50,3 +50,25 @@ int isNumber(const char *str)
 
 	return 1;
 }
+
+/**
+ * replaceOrRemove - self explantory
+ * @str: string
+ * @target: char
+*/
+
+void replaceOrRemove(char str[], char target)
+{
+	int length = _strlen(str), i;
+
+	for (i = 0; i < length; i++)
+	{
+		if (str[i] == target)
+		{
+			if (i < length - 1)
+				str[i] = str[i + 1];
+			else
+				str[i] = '\0';
+		}
+	}
+}

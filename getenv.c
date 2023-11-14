@@ -52,7 +52,39 @@ char *_getenv_(const char *name)
  * Return: string conatins full path, otherwise NULL
 */
 
-char *getpath(const char *name, char *env[])
+char *getpath(const char *name)
 {
         char *pathenv = _getenv_("PATH");
+        struct stat st;
+        char *full_path, *delim = ":";
+        char *token;
+
+        if (!pathenv)
+                return (NULL);
+        if (stat(name, &st) == 0)
+                return ((char *)name);
+        token = strtok(pathenv, delim);
+        while (token)
+        {
+                full_path = (char *)malloc(strlen(token) + strlen(name) + 2);
+                if (!full_path)
+                {
+                        perror("./hsh: ");
+                        free(token);
+                        return (NULL);
+                }
+                strcpy(full_path, token);
+                strcat(full_path, "/");
+                strcat(full_path, name);
+                if (stat(full_path, &st) == 0)
+                {
+                        free(token);
+                        return (full_path);
+                }
+                free(full_path);
+                token = strtok(NULL, delim);
+        }
+        free(token);
+        return (NULL);
+
 }

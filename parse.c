@@ -31,7 +31,7 @@ char **parse(char *line)
                                 return (NULL);
                         }
                 }
-                tokens = strtok(NULL, DELIMIT);
+                token = strtok(NULL, DELIMIT);
         }
         tokens[len] = NULL;
         parse_var(tokens);
@@ -54,12 +54,12 @@ int parse_var(char **args)
         {
                 for (j = 0; args[i][j]; j++)
                 {
-                        if (args[i][j] = '$' && args[i][j + 1] == '$')
+                        if (args[i][j] == '$' && args[i][j + 1] == '$')
                         {
                                 sprintf(args[i] + j, "%d", pid);
                                 k = 0;
                         }
-                        else if (args[i][j] = '$' && args[i][j + 1] == '?')
+                        else if (args[i][j] == '$' && args[i][j + 1] == '?')
                         {
                                 sprintf(args[i] + j, "%d", exit_stat);
                                 k = 0;

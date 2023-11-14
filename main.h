@@ -21,25 +21,21 @@ extern int exit_stat;
 
 char    **parse(char *);
 int	parse_var(char **args);
-
 int     execfun(char **);
 int     execbul(char **);
 int     cdfun(char **);
 int     exitfun(char **);
-int     envfun(char ** );
+int     envfun(char **);
 int	_unsetenv_(const char *);
-int _setenv_(const char *name, const char *value, int rewrite);
+int     _setenv_(const char *, const char *, int);
 char    *_findenv_(const char *name, int *offset);
 char    *_getenv_(const char *name);
-char	*getpath(const char *, char *env[]);
+char	*getpath(const char *);
 void	*_realloc_(void *, size_t size);
 int	_strcmp(const char *, const char *);
 int	isNumber(const char *); 
 int	_strlen(const char *);
-
-/*not used yet:*/
 void	free_command(char **arr);
-char 	*_getenv2(char *name, char *env[]);
-
-#define BUILTIN_NUM ((sizeof(builtins)) / (sizeof(builtin)))
+void    replaceOrRemove(char str[], char target);
+size_t  length(char **array);
 #endif
