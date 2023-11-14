@@ -74,7 +74,7 @@ int parse_var(char **args)
                         else if (args[i][0] == '$' && args[i][1] != '$'
                                                 && args[i][1] != '?')
                         {
-                                env_var = _getenv(args[i]);
+                                env_var = _getenv_(args[i]);
                                 if (env_var && args[i][0] == '$')
                                 {
                                         strcpy(args[i], env_var);

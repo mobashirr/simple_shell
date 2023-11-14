@@ -10,10 +10,11 @@
 #include <stdbool.h>
 #include <alloca.h>
 #include <sys/stat.h>
+#include <string.h>
 
 #define LINEBUF 1024
 #define ARGBUF  64
-#define DELIMIT " \t\r\n\a"
+#define DELIMIT " \t\n"
 
 extern char **environ;
 extern int exit_stat;
@@ -27,7 +28,7 @@ int     cdfun(char **);
 int     exitfun(char **);
 int     envfun(char ** );
 int	_unsetenv_(const char *);
-int 	_setenv_(char **args);
+int _setenv_(const char *name, const char *value, int rewrite);
 char    *_findenv_(const char *name, int *offset);
 char    *_getenv_(const char *name);
 char	*getpath(const char *, char *env[]);
