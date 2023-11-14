@@ -85,9 +85,9 @@ int parse_var(char **args)
                         }
                         else if (args[i][j] == '\\')
                         {
-                                /*char ch;
-                                ch = args[i][j + 1]; */
-                                sprintf(args[i] + j, "%s", args[i] + j + 1);
+				char ch;
+				ch = args[i][j + 1];
+				replaceOrRemove(args[i],ch);
                         }
                 }
         }

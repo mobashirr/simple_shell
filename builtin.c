@@ -21,7 +21,6 @@ int cdfun(char **command)
 		{
 			return (1);
 		}
-		printf("old:%s  \n pwd:%s",old,pwd);
 		if (chdir(old) == -1)
 		{
 			fprintf(stderr, "./hsh: 1: %s: can't cd to %s\n", command[0], command[1]);

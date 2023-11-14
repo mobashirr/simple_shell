@@ -38,7 +38,7 @@ int _setenv_(const char *name, const char *value, int rewrite)
 		cnt = P - environ;
 		P = (char **)_realloc_(lastenv, sizeof(char *) * (cnt + 2));
 		if (!P)
-			return (-1);
+			return (1);
 		if (lastenv != environ)
 			memcpy(P, environ, cnt * sizeof(char *));
 		lastenv = environ = P;
@@ -49,7 +49,7 @@ int _setenv_(const char *name, const char *value, int rewrite)
 		;
 	if (!(environ[offset] =
 			malloc((size_t)((int)(C - name) + l_value + 2))))
-			return (-1);
+			return (1);
 	for (*C++ = '='; (*C++ = *value++);)
 		;
 	return (0);
@@ -72,5 +72,5 @@ int _unsetenv_(const char *name)
 			if (!(*P = *(P + 1)))
 				break;
 	}
-	return 0;
+	return (0);
 }
