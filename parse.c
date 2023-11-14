@@ -64,30 +64,30 @@ int parse_var(char **args)
                                 sprintf(args[i] + j, "%d", exit_stat);
                                 k = 0;
                         }
-                        else if (args[i][j] == '#') /*Handle comments*/
+                        else if (args[i][0] == '#') /*Handle comments*/
                         {
                                 args[i][0] = '\0';
                                 for (l = i + 1; args[l]; l++)
                                         args[l] = NULL;
                                 return (0);
                         }
-                        else if (args[i][0] == '$' && args[i][1] != '$'
+                        else if (args[i][j] == '$' && args[i][1] != '$'
                                                 && args[i][1] != '?')
                         {
-                                env_var = _getenv_(args[i]);
+                                env_var = _getenv_(args[i] + 1);
                                 if (env_var && args[i][0] == '$')
                                 {
                                         strcpy(args[i], env_var);
-                                        free(env_var);
                                 }
+                                else
+                                        args[i][j] = '\0';
                                 k = 0;
                         }
                         else if (args[i][j] == '\\')
                         {
-                                char ch;
-
-                                ch = args[i][j + 1];
-                                replaceOrRemove(args[i], ch);
+                                /*char ch;
+                                ch = args[i][j + 1]; */
+                                sprintf(args[i] + j, "%s", args[i] + j + 1);
                         }
                 }
         }
