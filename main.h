@@ -21,15 +21,15 @@ extern int exit_stat;
 char    **parse(char *);
 int	parse_var(char **args);
 
-int    execfun(char **);
-int	execbul(char **);
-int    cdfun(char **);
-int    exitfun(char **);
-int	envfun(char ** );
+int     execfun(char **);
+int     execbul(char **);
+int     cdfun(char **);
+int     exitfun(char **);
+int     envfun(char ** );
 int	_unsetenv(const char *);
 int 	_setenv(char **args);
-
-char    *_getenv(const char *);
+char    *_findenv_(const char *name, int *offset)
+char    *_getenv_(const char *name)
 char	*getpath(const char *, char *env[]);
 
 void	*_realloc(void* array, size_t* size, size_t new_size);
