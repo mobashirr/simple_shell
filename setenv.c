@@ -1,53 +1,63 @@
 #include "main.h"
 
 /**
- * my_setenv - Set or update an environment variable
- * @name: The name of the environment variable
- * @value: The value to set for the environment variable
- * @overwrite: Flag indicating whether to overwrite if the variable already exists
- *
- * Return: 0 on success, -1 on failure
- */
-int _setenv_(const char *name, const char *value, int overwrite) 
+ * _setenv_ - set name to value
+ * @name: name of env
+ * @value: value of new env
+ * @rewrite: if set replace any current value
+ * @Return: 0 if success, -1 otherwise
+*/
+
+int _setenv_(const char *name, const char *value, int rewrite)
 {
-    if (!name || !name[0] || strchr(name, '=') || (getenv(name) && !overwrite)) {
-        return overwrite ? 0 : -1;
-    }
+	static char **lastenv;
+	char *C;
+	int l_value, offset;
 
-    char *env_entry;
-    int num_vars = 0,i;
+	if(!name || !value)	/*if no name return 2 invalid option*/
+		return(2);
 
-    asprintf(&env_entry, "%s=%s", name, value ? value : "");
-
-    if (!env_entry) {
-        return -1;
-    }
-
-    if (getenv(name)) {
-        for (i = 0; environ[i]; ++i) {
-            if (strncmp(environ[i], name, strlen(name)) == 0 && environ[i][strlen(name)] == '=') {
-                free(environ[i]);
-                environ[i] = env_entry;
-                return 0;
-            }
-        }
-    }
-
-    while (environ[num_vars]) {
-        ++num_vars;
-    }
-
-    char **new_environ = realloc(environ, (num_vars + 2) * sizeof(char *));
-    if (!new_environ) {
-        free(env_entry);
-        return -1;
-    }
-
-    environ = new_environ;
-    environ[num_vars] = env_entry;
-    environ[num_vars + 1] = NULL;
-
-    return 0;
+	if (*value == '=')
+		++value;
+	l_value = _strlen(value);
+	if ((C = _findenv_(name, &offset)))
+	{
+		if (!rewrite)
+			return (0);
+		if ((int)_strlen(C) >= l_value)
+		{
+			while ((*C++ = *value++))
+				;
+			return (0);
+		}
+	}
+	else
+	{
+		size_t cnt;
+		char **P;
+		
+		for (P = environ; *P != NULL; P++)
+			;
+		cnt = P - environ;
+		P = (char **)_realloc_(lastenv, sizeof(char *) * (cnt + 2));
+		if (!P)
+			return (-1);
+		if (lastenv != environ)
+			memcpy(P, environ, cnt * sizeof(char *));
+		lastenv = environ = P;
+		offset = cnt;
+		environ[cnt + 1] = NULL;
+	}
+	for (C = (char *)name; *C && *C != '='; ++C)
+		;
+	if (!(environ[offset] =
+			malloc((size_t)((int)(C - name) + l_value + 2))))
+			return (-1);
+	for (C = environ[offset]; (*C = *name++) && *C != '='; ++C)
+		;
+	for (*C++ = '='; (*C++ = *value++);)
+		;
+	return (0);
 }
 
 /**
