@@ -11,7 +11,15 @@ int cdfun(char **command)
 	char *pwd = NULL, *old = NULL;
 
 	if (!command[1])
-		return (1);
+	{
+		if (chdir(_getenv_("HOME")) == -1)
+		{
+			fprintf(stderr, "./hsh: 1: %s: can't cd to %s\n", command[0], command[1]);
+			return (2);
+		}
+		return(0);
+	}
+
 	if (strcmp(command[1], "-") == 0)
 	{
 		old = _getenv_("OLDPWD");
