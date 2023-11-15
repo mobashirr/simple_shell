@@ -1,6 +1,5 @@
 #include "main.h"
 
-int exit_stat = 0;
 /**
  * main - entry
  * Return: 0
@@ -12,25 +11,25 @@ int main(void)
 	const char *prompt = "shell $ ";
 	long unsigned int envo = length(environ);
 
-	while(1)
+	while (1)
 	{
-		if(isatty(STDIN_FILENO) != 0)
+		if (isatty(STDIN_FILENO) != 0)
 			write(1, prompt, _strlen(prompt));
 
-		if(getline(&line,&len,stdin) == -1)
+		if (getline(&line,&len,stdin) == -1)
 			break;
 
 		tokens = parse(line);
-		if(tokens[0])
+		if (tokens[0])
 			exit_stat = execfun(tokens);
 
-		if(tokens)
+		if (tokens)
 			free(tokens);
 	}
-	if(line)
+	if (line)
 		free(line);
 	(void)envo;
-	exit(exit_stat);
+	exit (exit_stat);
 
 	return (0);
 }

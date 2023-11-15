@@ -9,5 +9,5 @@
 #include "./include/parse.c"
 #include "./include/setenv.c"
 #include "./include/string.c"
-
+int exit_stat = 0;
 #endif
