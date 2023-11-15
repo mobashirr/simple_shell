@@ -1,5 +1,10 @@
 #include "main.h"
 
+void failure(const char *fun)
+{
+        fprintf(stderr, "./hsh: %s couldn't run\n", fun);
+}
+
 int _setenv_(const char *name, const char *value, int rewrite)
 {
         static int allocated;
@@ -8,7 +13,10 @@ int _setenv_(const char *name, const char *value, int rewrite)
         char ***envp = &environ;
 
         if (!name || !value || !rewrite)
-                return (0);
+        {
+                fprintf(stderr, "./hsh: setenv couldn't execute\n");
+                return (-1);
+        }
         if (*value == '=')
                 ++value;
         l_value = strlen(value);
@@ -29,14 +37,20 @@ int _setenv_(const char *name, const char *value, int rewrite)
                 {
                         *envp = (char **)_realloc_((char *)*envp, (size_t)(sizeof(char *)*(cnt +2)));
                         if (!*envp)
+                        {
+                                fprintf(stderr, "./hsh: setenv couldn't execute\n");
                                 return (-1);
+                        }
                 }
                 else
                 {
                         allocated = 1;
                         p = malloc((size_t)(sizeof(char *)*(cnt + 2)));
                         if (!p)
+                        {
+                                fprintf(stderr, "./hsh: setenv couldn't execute\n");
                                 return (-1);
+                        }
                         memcpy(p, *envp, cnt * sizeof(char *));
                         *envp = p;
                 }
@@ -60,7 +74,10 @@ int _unsetenv_(const char *name)
         int offset;
 
         if (!name)
-                return (0);
+        {
+                fprintf(stderr, "./hsh: unsetenv couldn't execute\n");
+                return (-1);
+        }
         while (_findenv_(name, &offset))
                 for (p = &envp[offset];; ++p)
                         if (!(*p = *(p + 1)))
