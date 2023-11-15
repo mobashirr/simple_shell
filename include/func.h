@@ -1,6 +1,8 @@
 #ifndef FUNC_H
 #define FUNC_H
 
+int exit_stat = 0;
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

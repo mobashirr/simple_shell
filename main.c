@@ -9,14 +9,14 @@ int main(void)
 	char *line = NULL, **tokens = NULL;
 	size_t len = 0;
 	const char *prompt = "shell $ ";
-	long unsigned int envo = length(environ);
+	unsigned long int envo = length(environ);
 
 	while (1)
 	{
 		if (isatty(STDIN_FILENO) != 0)
 			write(1, prompt, _strlen(prompt));
 
-		if (getline(&line,&len,stdin) == -1)
+		if (getline(&line, &len, stdin) == -1)
 			break;
 
 		tokens = parse(line);
@@ -29,7 +29,7 @@ int main(void)
 	if (line)
 		free(line);
 	(void)envo;
-	exit (exit_stat);
+	exit(exit_stat);
 
 	return (0);
 }
