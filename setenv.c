@@ -59,6 +59,8 @@ int _unsetenv_(const char *name)
         char **envp = environ, **p;
         int offset;
 
+        if (!name)
+                return (0);
         while (_findenv_(name, &offset))
                 for (p = &envp[offset];; ++p)
                         if (!(*p = *(p + 1)))
