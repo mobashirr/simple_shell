@@ -14,7 +14,7 @@ int _setenv_(const char *name, const char *value, int rewrite)
 	char *C;
 	int l_value, offset;
 
-	if(!name || !value)	/*if no name return 2 invalid option*/
+	if(!name || !value)
 		return(2);
 
 	if (*value == '=')

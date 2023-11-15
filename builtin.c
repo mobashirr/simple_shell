@@ -27,7 +27,7 @@ int cdfun(char **command)
 			return (2);
 		}
 		printf("%s\n", old);
-		goto setting;
+		goto last;
 	}
 	else if (chdir(command[1]) == -1)
 	{
@@ -37,7 +37,13 @@ int cdfun(char **command)
 	pwd = _getenv_("PWD");
 	if (!pwd)
 		return (1);
-setting:
+	goto path;
+last:
+	old = _getenv_("OLDPWD");
+	setenv("OLDPWD", pwd, 1);
+	setenv("PWD", old, 1);
+	return (0);
+path:
 	setenv("OLDPWD", pwd, 1);
 	setenv("PWD", command[1], 1);
 	return (0);
