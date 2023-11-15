@@ -8,11 +8,18 @@
 
 int cdfun(char **command)
 {
-	char *pwd = NULL, *old = NULL;
+	char *pwd = NULL, *old = NULL, *HOM = NULL;
 
+		old = _getenv_("OLDPWD");
+		pwd = _getenv_("PWD");
+		if (!old || !pwd)
+		{
+			return (1);
+		}
 	if (!command[1])
 	{
-		if (chdir(_getenv_("HOME")) == -1)
+		HOM = _getenv_("HOME");
+		if (chdir(HOM) == -1)
 		{
 			fprintf(stderr, "./hsh: 1: %s: can't cd to %s\n", command[0], command[1]);
 			return (2);
@@ -22,13 +29,7 @@ int cdfun(char **command)
 
 	if (strcmp(command[1], "-") == 0)
 	{
-		old = _getenv_("OLDPWD");
-		pwd = _getenv_("PWD");
 
-		if (!old || !pwd)
-		{
-			return (1);
-		}
 		if (chdir(old) == -1)
 		{
 			fprintf(stderr, "./hsh: 1: %s: can't cd to %s\n", command[0], command[1]);
@@ -42,7 +43,6 @@ int cdfun(char **command)
 		fprintf(stderr, "./hsh: 1: can't cd to %s\n", command[1]);
 		return (2);
 	}
-	pwd = _getenv_("PWD");
 	if (!pwd)
 		return (1);
 	goto normal;
