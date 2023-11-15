@@ -10,6 +10,7 @@
 
 int _setenv_(const char *name, const char *value, int rewrite)
 {
+	static int alloced;
 	static char **lastenv;
 	char *C;
 	int l_value, offset;
@@ -19,12 +20,12 @@ int _setenv_(const char *name, const char *value, int rewrite)
 
 	if (*value == '=')
 		++value;
-	l_value = _strlen(value);
+	l_value = strlen(value);
 	if ((C = _findenv_(name, &offset)))
 	{
 		if (!rewrite)
 			return (0);
-		if ((int)_strlen(C) >= l_value)
+		if ((int)strlen(C) >= l_value)
 		{
 			while ((*C++ = *value++))
 				;
@@ -36,22 +37,30 @@ int _setenv_(const char *name, const char *value, int rewrite)
 		size_t cnt;
 		char **P;
 		
-		for (P = environ; *P != NULL; P++)
+		for (P = environ, cnt = 0; *P; ++P, ++cnt)
 			;
-		cnt = P - environ;
-		P = (char **)_realloc_(lastenv, sizeof(char *) * (cnt + 2));
-		if (!P)
-			return (-1);
-		if (lastenv != environ)
-			memcpy(P, environ, cnt * sizeof(char *));
-		lastenv = environ = P;
-		offset = cnt;
+		if (alloced)
+		{
+			P = (char **)realloc((char *)*lastenv, (size_t)(sizeof(char *) * (cnt + 2)));
+			if (!P)
+				return (-1);
+		}
+		else
+		{
+			alloced = 1;
+			P = malloc((size_t)(sizeof(char *) * (cnt + 2)));
+			if (!P)
+				return (-1);
+			bcopy(environ, P, cnt * sizeof(char *));
+			lastenv = environ = P;
+		}
 		environ[cnt + 1] = NULL;
+		offset = cnt;
+		free(P);
 	}
 	for (C = (char *)name; *C && *C != '='; ++C)
 		;
-	if (!(environ[offset] =
-			malloc((size_t)((int)(C - name) + l_value + 2))))
+	if (!(environ[offset] = malloc((size_t)((int)(C - name) + l_value + 2))))
 			return (-1);
 	for (C = environ[offset]; (*C = *name++) && *C != '='; ++C)
 		;

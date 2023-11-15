@@ -14,7 +14,7 @@ int cdfun(char **command)
 	pwd = _getenv_("PWD");
 	if (!old || !pwd)
 		return (1);
-	if (!command[1])
+	if (!command[1] || strcmp(command[1], "~") == 0)
 	{
 		old = pwd;
 		pwd = _getenv_("HOME");
