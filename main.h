@@ -29,6 +29,8 @@ int     envfun(char **);
 char    *_findenv_(const char *name, int *offset);
 char    *_getenv_(const char *name);
 char	*getpath(const char *);
+int     _setenv_(const char *name, const char *value, int rewrite);
+int    _unsetenv_(const char *name);
 void	*_realloc_(void *, size_t size);
 int	_strcmp(const char *, const char *);
 int	isNumber(const char *); 
