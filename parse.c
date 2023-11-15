@@ -71,13 +71,13 @@ int parse_var(char **args)
                                         args[l] = NULL;
                                 return (0);
                         }
-                        else if (args[i][j] == '$' && args[i][1] != '$'
-                                                && args[i][1] != '?')
+                        else if (args[i][j] == '$' && args[i][j +1] != '$'
+                                                && args[i][j + 1] != '?')
                         {
                                 env_var = _getenv_(args[i] + 1);
                                 if (env_var && args[i][0] == '$')
                                 {
-                                        strcpy(args[i], env_var);
+                                       sprintf(args[i] + j, "%s", env_var);
                                 }
                                 else
                                         args[i][j] = '\0';
