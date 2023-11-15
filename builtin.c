@@ -17,7 +17,7 @@ int cdfun(char **command)
 			fprintf(stderr, "./hsh: 1: %s: can't cd to %s\n", command[0], command[1]);
 			return (2);
 		}
-		return(0);
+		goto home;
 	}
 
 	if (strcmp(command[1], "-") == 0)
@@ -53,6 +53,10 @@ last:
 normal:
 	setenv("OLDPWD", pwd, 1);
 	setenv("PWD", command[1], 1);
+	return (0);
+home:
+	setenv("OLDPWD", pwd, 1);
+	setenv("PWD", _getenv_("HOME"), 1);
 	return (0);
 }
 
