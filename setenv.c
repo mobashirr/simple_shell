@@ -13,6 +13,10 @@ int _setenv_(const char *name, const char *value, int rewrite)
 	static char **lastenv;
 	char *C;
 	int l_value, offset;
+	const char *originalName;
+	const char *originalValue;
+	if(!name || !value)	/*if no name return 2 invalid option*/
+		return(2);
 
 	if (*value == '=')
 		++value;
@@ -45,15 +49,24 @@ int _setenv_(const char *name, const char *value, int rewrite)
 		offset = cnt;
 		environ[cnt + 1] = NULL;
 	}
-	for (C = (char *)name; *C && *C != '='; ++C)
-		;
-	if (!(environ[offset] =
-			malloc((size_t)((int)(C - name) + l_value + 2))))
-			return (-1);
-	for (C = environ[offset]; (*C = *name++) && *C != '='; ++C)
-		;
-	for (*C++ = '='; (*C++ = *value++);)
-		;
+
+originalName = name;
+originalValue = value;
+for (; *name && *name != '='; ++name)
+    ;
+
+if (!(environ[offset] = malloc((size_t)((name - originalName) + l_value + 2))))
+    return (1);
+
+name = originalName;
+C = environ[offset];
+
+for (; (*C = *name++) && *C != '='; ++C)
+    ;
+
+for (*C++ = '='; (*C++ = *originalValue++);)
+    ;
+
 	return (0);
 }
 

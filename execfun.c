@@ -51,6 +51,13 @@ int execfun(char **args)
         else if (pid == 0)
         {
                 path = getpath(args[0]);
+                if(!path)
+                {
+                free(path);
+                fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+                free_command(args);
+                exit(127);
+                }
                 if (stat(path, &st) == 0)
                 {
                         if (execve(path, args, env) == -1)
@@ -63,10 +70,6 @@ int execfun(char **args)
                         free_command(args);
                         exit(126);
                 }
-                free(path);
-                fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
-                free_command(args);
-                exit(127);
         }
         return (1);
 }
