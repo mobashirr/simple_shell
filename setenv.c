@@ -10,26 +10,32 @@
  */
 int _setenv_(const char *name, const char *value, int overwrite) 
 {
-    if (!name || !name[0] || strchr(name, '=') || (getenv(name) && !overwrite))
+    if (!name || !name[0] || strchr(name, '=') || (getenv(name) && !overwrite)) {
         return overwrite ? 0 : -1;
+    }
 
     char *env_entry;
+    int num_vars = 0,i;
+
     asprintf(&env_entry, "%s=%s", name, value ? value : "");
 
-    if (!env_entry)
+    if (!env_entry) {
         return -1;
+    }
 
-    if (getenv(name))
-        for (int i = 0; environ[i]; ++i)
+    if (getenv(name)) {
+        for (i = 0; environ[i]; ++i) {
             if (strncmp(environ[i], name, strlen(name)) == 0 && environ[i][strlen(name)] == '=') {
                 free(environ[i]);
                 environ[i] = env_entry;
                 return 0;
             }
+        }
+    }
 
-    int num_vars = 0;
-    while (environ[num_vars])
+    while (environ[num_vars]) {
         ++num_vars;
+    }
 
     char **new_environ = realloc(environ, (num_vars + 2) * sizeof(char *));
     if (!new_environ) {
