@@ -37,13 +37,13 @@ int cdfun(char **command)
 	pwd = _getenv_("PWD");
 	if (!pwd)
 		return (1);
-	goto path;
+	goto normal;
 last:
 	old = _getenv_("OLDPWD");
 	setenv("OLDPWD", pwd, 1);
 	setenv("PWD", old, 1);
 	return (0);
-path:
+normal:
 	setenv("OLDPWD", pwd, 1);
 	setenv("PWD", command[1], 1);
 	return (0);
