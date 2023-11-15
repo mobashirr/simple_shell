@@ -7,13 +7,13 @@ int _setenv_(const char *name, const char *value, int rewrite)
         int l_value, offset;
         char ***envp = &environ;
 
+        if (!name || !value || !rewrite)
+                return (0);
         if (*value == '=')
                 ++value;
         l_value = strlen(value);
         if ((C = _findenv_(name, &offset)))
         {
-                if (!rewrite)
-                        return (0);
                 if ((int)strlen(C) >= l_value)
                         while ((*C++ = *value++))
                                 return (0);
