@@ -39,7 +39,6 @@ int cdfun(char **command)
 		return (1);
 	goto normal;
 last:
-	old = _getenv_("OLDPWD");
 	setenv("OLDPWD", pwd, 1);
 	setenv("PWD", old, 1);
 	return (0);

@@ -29,8 +29,7 @@ int main(void)
 	}
 	if(line)
 		free(line);
-	if(envo != length(environ))
-		free(environ);
+	(void)envo;
 	exit(exit_stat);
 
 	return (0);
