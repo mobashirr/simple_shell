@@ -1,9 +1,4 @@
-#include "main.h"
-
-void failure(const char *fun)
-{
-        fprintf(stderr, "./hsh: %s couldn't run\n", fun);
-}
+#include "func.h"
 
 int _setenv_(const char *name, const char *value, int rewrite)
 {
@@ -65,6 +60,8 @@ int _setenv_(const char *name, const char *value, int rewrite)
                 ;
         for (*C++ = '='; (*C++ = *value++);)
                 ;
+        if (envp)
+                free(envp);
         return (0);
 }
 

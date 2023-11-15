@@ -1,4 +1,4 @@
-#include "main.h"
+#include "func.h"
 
 /**
  * execbul - execute builtin functions

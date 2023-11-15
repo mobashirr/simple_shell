@@ -1,4 +1,4 @@
-#include "main.h"
+#include "func.h"
 
 /**
  * _realloc_ - reallocate memory for array

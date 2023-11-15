@@ -38,7 +38,7 @@ int main(void)
 /**
  * length - to calculate length of string
  * @array: string
- * @Return: the length
+ * Return: the length
 */
 size_t length(char **array)
 {

@@ -1,4 +1,4 @@
-#include "main.h"
+#include "func.h"
 
 /**
  * parse - to parse the input line

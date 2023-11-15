@@ -1,4 +1,4 @@
-#include "main.h"
+#include "func.h"
 
 /**
  * __findenv - returns pointer to value linked to name and sets
