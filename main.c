@@ -23,7 +23,7 @@ int main(void)
 		tokens = parse(line);
 		if(tokens[0])
 			exit_stat = execfun(tokens);
-		
+
 		if(tokens)
 			free(tokens);
 	}
