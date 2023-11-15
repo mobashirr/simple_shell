@@ -26,8 +26,6 @@ int     execbul(char **);
 int     cdfun(char **);
 int     exitfun(char **);
 int     envfun(char **);
-int	_unsetenv_(const char *);
-int     _setenv_(const char *, const char *, int);
 char    *_findenv_(const char *name, int *offset);
 char    *_getenv_(const char *name);
 char	*getpath(const char *);

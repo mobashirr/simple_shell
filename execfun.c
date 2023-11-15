@@ -15,9 +15,9 @@ int execbul(char **args)
         else if (strcmp(args[0], "env") == 0)
                 return (envfun(args));
         else if (strcmp(args[0], "setenv") == 0)
-                return (_setenv_(args[1], args[2], 1));
+                return (setenv(args[1], args[2], 1));
         else if (strcmp(args[0], "unsetenv") == 0)
-                return (_unsetenv_(args[1]));
+                return (unsetenv(args[1]));
         return (-1);
 }
 
