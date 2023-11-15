@@ -8,55 +8,50 @@
 
 int cdfun(char **command)
 {
-	char *pwd = NULL, *old = NULL, *HOM = NULL;
+	char *pwd = NULL, *old = NULL, *temp = NULL;
 
-		old = _getenv_("OLDPWD");
-		pwd = _getenv_("PWD");
-		if (!old || !pwd)
-		{
-			return (1);
-		}
+	old = _getenv_("OLDPWD");
+	pwd = _getenv_("PWD");
+	if (!old || !pwd)
+		return (1);
 	if (!command[1])
 	{
-		HOM = _getenv_("HOME");
-		if (chdir(HOM) == -1)
+		old = pwd;
+		pwd = _getenv_("HOME");
+		if (chdir(pwd) == -1)
 		{
 			fprintf(stderr, "./hsh: 1: %s: can't cd to %s\n", command[0], command[1]);
 			return (2);
 		}
-		goto home;
+		goto update;
 	}
-
-	if (strcmp(command[1], "-") == 0)
+	else if (strcmp(command[1], "-") == 0)
 	{
-
 		if (chdir(old) == -1)
 		{
 			fprintf(stderr, "./hsh: 1: %s: can't cd to %s\n", command[0], command[1]);
 			return (2);
 		}
 		printf("%s\n", old);
-		goto last;
+		temp = old;
+		old = pwd;
+		pwd = temp;
+		goto update;
 	}
-	else if (chdir(command[1]) == -1)
+	else
 	{
-		fprintf(stderr, "./hsh: 1: can't cd to %s\n", command[1]);
-		return (2);
+		if (chdir(command[1]) == -1)
+		{
+			fprintf(stderr, "./hsh: 1: can't cd to %s\n", command[1]);
+			return (2);
+		}
+		old = pwd;
+		pwd = command[1];
+		goto update;
 	}
-	if (!pwd)
-		return (1);
-	goto normal;
-last:
-	setenv("OLDPWD", pwd, 1);
-	setenv("PWD", old, 1);
-	return (0);
-normal:
-	setenv("OLDPWD", pwd, 1);
-	setenv("PWD", command[1], 1);
-	return (0);
-home:
-	setenv("OLDPWD", pwd, 1);
-	setenv("PWD", _getenv_("HOME"), 1);
+update:
+	setenv("OLDPWD", old, 1);
+	setenv("PWD", pwd, 1);
 	return (0);
 }
 
